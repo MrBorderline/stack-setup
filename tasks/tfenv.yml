@@ -1,0 +1,60 @@
+---
+- name: Clonado de TFENV
+  become_user: "{{ local_user }}"
+  git:
+    repo: "{{ tfenv_repo }}"
+    dest: "~/.tfenv" 
+    version: "{{ tfenv_version }}"
+
+- name: Seteo de $PATH para TFENV
+  become_user: "{{ local_user  }}"
+  copy:
+    dest: "~/.bash_profile"
+    content: |
+      export PATH="$HOME/.tfenv/bin:$PATH"
+
+- stat:
+    path: "/usr/local/bin/tfenv" 
+  register: tfenvpath
+
+- debug:
+    msg: "/usr/local/bin/tfenv existe"
+  when: tfenvpath.stat.islnk is  defined
+
+- debug:
+    msg: "/usr/local/bin/tfenv no existe!!!"
+  when: tfenvpath.stat.islnk is not defined
+
+- stat:
+    path: "/usr/local/bin/terraform"
+  register: terraformpath
+
+- debug:
+    msg: "/usr/local/bin/terraform existe"
+  when: tfenvpath.stat.islnk is  defined
+
+- debug:
+    msg: "/usr/local/bin/terraform no existe!!!"
+  when: tfenvpath.stat.islnk is not defined
+
+
+- name:  Crear symblink TFENV (tfenv exec)
+  file:
+    src: "/home/{{ local_user }}/.tfenv/bin/tfenv"
+    dest: "{{ binary_path }}/tfenv"
+    owner: root
+    group: root
+    state: link
+  when: tfenvpath.stat.islnk is not  defined
+#   command: "ln -s /home/{{ local_user }}/.tfenv/bin/tfenv /usr/local/bin"
+
+- name: Crear symblink TFENV (terraform exec)
+  file:
+    src: "/home/{{ local_user }}/.tfenv/bin/terraform"
+    dest: "{{ binary_path }}/terraform"
+    owner: root
+    group: root
+    state: link  
+  when: terraformpath.stat.islnk is not defined
+  # command: "ln -s /home/{{ local_user }}/.tfenv/bin/terraform /usr/local/bin"
+  

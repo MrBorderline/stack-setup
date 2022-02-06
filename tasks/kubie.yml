@@ -1,0 +1,15 @@
+---
+- name: Descarga de kubie version "{{ kubie_version }}"
+  get_url:
+    url: "{{ kubie_download_url }}"
+    dest: "{{ tmp_dir }}{{ mnt_path }}/"
+    mode: "0755"
+  register: download_kubie
+
+- name: Alojar kubie en /usr/local/bin
+  copy:
+    src: "{{ tmp_dir }}{{ mnt_path }}/{{ kubie_download_url | basename }}"
+    dest: "{{ binary_path }}/kubie"
+    remote_src: yes
+    mode: "0755"
+  when: download_kubie.changed

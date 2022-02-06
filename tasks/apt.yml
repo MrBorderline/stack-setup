@@ -1,0 +1,31 @@
+---
+- name: Update and upgrade apt
+  become: true
+  apt:
+    upgrade: yes
+
+- name: Instalar dependencias
+  apt:
+    name: [git,
+           net-tools,
+           pv,
+           jq,
+           apt-transport-https,
+           ca-certificates,
+           software-properties-common,
+           htop,
+           python3-pip,
+           fzf,
+           vim,
+           neofetch,
+           terminator,
+           curl,
+           golang-go]
+
+- name: Creamos {{ tmp_dir }}{{ mnt_path }}
+  file:
+    path: "{{ tmp_dir }}{{ mnt_path }}"
+    owner: root
+    group: root
+    mode: "0777"
+    state: directory

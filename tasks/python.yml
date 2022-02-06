@@ -1,0 +1,19 @@
+---
+# - name: Descargar python {{ python_version }}
+#   get_url:
+#     url: "{{ python_download_url }}"
+#     dest: "{{ tmp_dir }}{{ mnt_path }}"
+#   register: download_python
+
+# - name: Descomprimir tgz
+#   unarchive: 
+#     src: "{{ tmp_dir }}{{ mnt_path }}/Python-{{ python_version }}.tgz"
+#     dest: "{{ tmp_dir }}{{ mnt_path }}"
+#     remote_src: yes
+
+# - name: Configuracion Python {{ python_version }}
+#   command: "{{ tmp_dir }}{{ mnt_path }}/Python-{{ python_version }}/configure --enable-optimizations"
+
+- name: Instalacion Python {{ python_version }}
+  command: "chdir={{ tmp_dir }}{{ mnt_path }}/Python-{{ python_version }}  make altinstall"
+

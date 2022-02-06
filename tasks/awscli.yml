@@ -1,0 +1,21 @@
+---
+- name: Descarga de AWS version "{{ awscli_version }}"
+  get_url:
+    url: "{{ awscli_download_url }}"
+    dest: "{{ tmp_dir }}{{ mnt_path }}"
+  register: download_aws
+
+- name: Descomprimir  aws {{ tmp_dir }}{{ mnt_path }}/awscli-exe-linux-x86_64.zip
+  unarchive:
+    src: "{{ tmp_dir }}{{ mnt_path }}/awscli-exe-linux-x86_64.zip"
+    dest: "{{ tmp_dir }}{{ mnt_path }}"
+    remote_src: yes
+  when: download_aws.changed
+
+- stat:
+    path: "{{ binary_path }}/aws"
+  register: awspath
+
+- name: Instalar AWS Cli (executeable)
+  command: "{{ tmp_dir }}{{ mnt_path }}/aws/install --bin-dir {{ binary_path  }} --install-dir /usr/local/aws-cli --update"
+  when: awspath.stat.islnk is not defined

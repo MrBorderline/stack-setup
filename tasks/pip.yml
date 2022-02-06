@@ -1,0 +1,6 @@
+---
+- name: Upgrade pip
+  pip:
+    name: pip
+    #executable: pip3.6
+    extra_args: --trusted-host pypi.org --trusted-host  files.pythonhosted.org --upgrade

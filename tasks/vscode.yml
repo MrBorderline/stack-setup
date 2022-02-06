@@ -1,0 +1,4 @@
+---
+- name: Instalacion de Visual Studio
+  apt:
+    deb: "{{vscode_download}}"

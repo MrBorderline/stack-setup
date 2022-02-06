@@ -1,0 +1,15 @@
+---
+
+### Terraform
+#    - name: Descarga de terraform version "{{ terraform_version }}"
+#      get_url:
+#        url: "{{ terraform_download_url }}"
+#        dest: "{{ tmp_dir }}{{ mnt_path }}/"
+#      register: download_terraform
+#
+#    - name: Descomprimir y alojar terraform en /usr/local/bin
+#      unarchive:
+#        src: "{{ mount_path }}{{ tmp_dir }}/{{ terraform_download_url | basename }}"
+#        dest: "{{ binary_path }}"
+#        copy: False
+#      when: download_terraform.changed

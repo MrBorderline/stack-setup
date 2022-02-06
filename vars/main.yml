@@ -1,0 +1,33 @@
+### Commons
+tmp_dir: "/tmp"
+binary_path: "/usr/local/bin"
+mnt_path: "/data"
+local_user: "u632124"
+### Python
+python_version: "3.9.10"
+python_download_url: "https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tgz "
+### Packer
+packer_version: "1.7.8"
+packer_download_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip"
+### Terraform
+terraform_version: "1.0.11"
+terraform_download_url: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip"
+### Helm
+helm_version: "3.7.1"
+helm_download_url: "https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz"
+### Kubectl
+kubectl_version: "1.22.0"
+kubectl_download_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl"
+### kubie
+kubie_version: "0.15.1"
+kubie_download_url: "https://github.com/sbstp/kubie/releases/download/v{{ kubie_version }}/kubie-linux-amd64"
+### AWS Cli
+awscli_version: "2"
+awscli_download_url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+### TFENV 
+tfenv_repo: "https://github.com/tfutils/tfenv.git"   
+tfenv_version: "v2.2.2"
+### Visual Studio
+vscode_version: "1.64.0"
+vscode_download: "https://update.code.visualstudio.com/{{ vscode_version }}/linux-deb-x64/stable"
+
