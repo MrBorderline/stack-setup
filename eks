@@ -1,0 +1,96 @@
+#!/bin/bash
+
+if [[ $1 == "" ]] ; then
+cat <<EOF
+
+# Parametros:
+info             Informacion de Ambientes, Profiles y Clusters AWS
+
+list_cluster     
+		Ej: eks_cluster (dev|test|prod)
+kubecfg         
+		Ej: eks_cluster kubecfg (dev|stg|uat|prod)
+
+EOF
+fi
+
+if [[ $1 == "info" ]] ; then
+cat <<EOF
+
+Ambientes | Profiles  | Clusters:
+---------------------------------
+092494271509_SANDBOX_ADM | CIO-Sandbox
+- teco-dev-bffecomm-cluster   -> corre SONAR
+
+597844716329_AWS_TEC_DVP_ADM | Switch-Dev
+- teco-dev-bffecomm-cluster
+
+460778366628_AWS_TEC_DVP_ADM | Switch-Prod
+- teco-pro-bffecomm-cluster
+
+
+769771297716_AWS_TEC_DVP_ADM | Switch-Test
+- teco-stg-bffecomm-cluster
+- teco-uat-bffecomm-cluster
+
+EOF
+fi
+# DEV
+if [[ $1 == "list_cluster" ]] && [[ $2 == "dev"  ]]; then
+    PROFILE="597844716329_AWS_TEC_DVP_ADM"
+    aws eks list-clusters --profile $PROFILE --region us-east-1 |   tr -d "{[]}" |  tr -d '  "  ' 
+fi 
+# TEST 
+if [[ $1 == "list_cluster" ]] && [[ $2 == "test"  ]]; then
+    PROFILE="769771297716_AWS_TEC_DVP_ADM"
+    aws eks list-clusters --profile $PROFILE --region us-east-1 |   tr -d "{[]}" |  tr -d '  "  '
+fi
+# PROD
+if [[ $1 == "list_cluster" ]] && [[ $2 == "prod"  ]]; then
+    PROFILE="460778366628_AWS_TEC_DVP_ADM"
+    aws eks list-clusters --profile $PROFILE --region us-east-1 |   tr -d "{[]}" |  tr -d '  "  '
+fi
+
+# DEV
+
+if [[ $1 == "kubecfg" ]] && [[ $2 == "dev"  ]] && [[ $1 != "" ]]; then
+        PROFILE="597844716329_AWS_TEC_DVP_ADM"
+        CLUSTER_NAME="teco-dev-bffecomm-cluster"
+        export AWS_ACCESS_KEY_ID=$(cat ~/.aws/credentials  | grep $PROFILE -A 3 |  grep aws_access_key_id | cut -d "=" -f2)
+        export AWS_SECRET_ACCESS_KEY=$(cat ~/.aws/credentials  | grep $PROFILE -A 3 |  grep aws_secret_access_key | cut -d "=" -f2)
+        export AWS_SESSION_TOKEN=$(cat ~/.aws/credentials | grep $PROFILE -A 3 |  grep aws_session_token | cut -d "=" -f2)
+        aws eks --region us-east-1 update-kubeconfig  --name $CLUSTER_NAME   --profile $PROFILE --kubeconfig ~/.kube/contexts/"$PROFILE"_"$CLUSTER_NAME".yaml
+fi
+
+# TEST UAT
+
+if [[ $1 == "kubecfg" ]] && [[ $2 == "uat"  ]] && [[ $1 != "" ]]; then
+        PROFILE="769771297716_AWS_TEC_DVP_ADM"
+        CLUSTER_NAME="teco-uat-bffecomm-cluster"
+        export AWS_ACCESS_KEY_ID=$(cat ~/.aws/credentials  | grep $PROFILE -A 3 |  grep aws_access_key_id | cut -d "=" -f2)
+        export AWS_SECRET_ACCESS_KEY=$(cat ~/.aws/credentials  | grep $PROFILE -A 3 |  grep aws_secret_access_key | cut -d "=" -f2)
+        export AWS_SESSION_TOKEN=$(cat ~/.aws/credentials | grep $PROFILE -A 3 |  grep aws_session_token | cut -d "=" -f2)
+        aws eks --region us-east-1 update-kubeconfig  --name $CLUSTER_NAME  --profile $PROFILE --kubeconfig ~/.kube/contexts/"$PROFILE"_"$CLUSTER_NAME".yaml
+fi
+
+#TEST STG
+
+if [[ $1 == "kubecfg" ]] && [[ $2 == "stg"  ]] && [[ $1 != "" ]]; then
+        PROFILE="769771297716_AWS_TEC_DVP_ADM"
+        CLUSTER_NAME="teco-stg-bffecomm-cluster"
+        export AWS_ACCESS_KEY_ID=$(cat ~/.aws/credentials  | grep $PROFILE -A 3 |  grep aws_access_key_id | cut -d "=" -f2)
+        export AWS_SECRET_ACCESS_KEY=$(cat ~/.aws/credentials  | grep $PROFILE -A 3 |  grep aws_secret_access_key | cut -d "=" -f2)
+        export AWS_SESSION_TOKEN=$(cat ~/.aws/credentials | grep $PROFILE -A 3 |  grep aws_session_token | cut -d "=" -f2)
+        aws eks --region us-east-1 update-kubeconfig  --name $CLUSTER_NAME  --profile $PROFILE --kubeconfig ~/.kube/contexts/"$PROFILE"_"$CLUSTER_NAME".yaml
+fi
+
+# PROD
+
+if [[ $1 == "kubecfg" ]] && [[ $2 == "prod"  ]] && [[ $1 != "" ]]; then
+        PROFILE="460778366628_AWS_TEC_DVP_ADM"
+        CLUSTER_NAME="teco-pro-bffecomm-cluster"
+        export AWS_ACCESS_KEY_ID=$(cat ~/.aws/credentials  | grep $PROFILE -A 3 |  grep aws_access_key_id | cut -d "=" -f2)
+        export AWS_SECRET_ACCESS_KEY=$(cat ~/.aws/credentials  | grep $PROFILE -A 3 |  grep aws_secret_access_key | cut -d "=" -f2)
+        export AWS_SESSION_TOKEN=$(cat ~/.aws/credentials | grep $PROFILE -A 3 |  grep aws_session_token | cut -d "=" -f2)
+        aws eks --region us-east-1 update-kubeconfig  --name $CLUSTER_NAME  --profile $PROFILE --kubeconfig ~/.kube/contexts/"$PROFILE"_"$CLUSTER_NAME".yaml
+fi

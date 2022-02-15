@@ -18,6 +18,9 @@ helm_download_url: "https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar
 ### Kubectl
 kubectl_version: "1.22.0"
 kubectl_download_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl"
+### kubecolor
+kubecolor_version: "0.0.20"
+kubecolor_download_url: https://github.com/hidetatz/kubecolor/releases/download/v{{ kubecolor_version }}/kubecolor_{{ kubecolor_version }}_Linux_x86_64.tar.gz
 ### kubie
 kubie_version: "0.15.1"
 kubie_download_url: "https://github.com/sbstp/kubie/releases/download/v{{ kubie_version }}/kubie-linux-amd64"

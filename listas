@@ -1,0 +1,35 @@
+# ARRAYS.
+# array=($string) string to array.
+# ${array{@}} Cantidad de elementos en un array.
+# for i in "${array[@]}"; do Recorriendo un array.
+# echo $i 
+# done
+
+# echo ${array[@]} All elements, space-separated
+# New_Array=("${Old_Array[@]}") Copiar arrays.
+# array+=($new_element) Append to array.
+# unset ARRAY[element] Quita el elemento del array.
+# |& Redirect stderr and stdout to pipe.
+
+# if ! cmd; then NOT exit status.
+# (...)
+# fi
+
+        
+        
+LST_PRFL=(092494271509_SANDBOX_ADM 
+          597844716329_AWS_TEC_DVP_ADM
+          460778366628_AWS_TEC_DVP_ADM
+          658913498668_SANDBOX_ADM
+          769771297716_AWS_TEC_DVP_ADM
+          )
+
+LST_EKS_CIO_SNDBX="cbo-demo-arq-container cbo-demo-arq-container"
+
+LST_EKS_SWTC_DV="teco-dev-bffccc-cluster switch-catalogo switch-dev teco-dev-bffecomm-cluster "
+
+LST_EKS_SWTC_PRD=""
+
+LST_EKS_SWTC_SNDBX=""
+
+LST_EKS_SWTC_TST=""
